@@ -1,2 +1,14 @@
-.env
+# Да, я все понимаю
 
+# Файлы конфигурации
+# app/config.php
+# app/admin/config.php
+
+# Логи и кэш
+# app/system/storage/logs/
+# app/system/storage/cache/
+# app/system/storage/sessions/
+# app/system/storage/uploads/
+
+# Директории с данными
+# app/system/storage/download/

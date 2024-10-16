@@ -1,5 +1,30 @@
-FROM ubuntu:latest
+# Используем официальный образ PHP с Apache
+FROM php:7.4-apache
 
-RUN apt-get update && apt-get install -y sudo wget
+# Устанавливаем необходимые расширения PHP
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-CMD ["bash", "-c", "wget -N https://raw.githubusercontent.com/Websoft9/StackHub/main/docker-installer.sh && bash docker-installer.sh -r opencart"]
+# Устанавливаем зависимости для OpenCart
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libzip-dev \
+    unzip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd zip
+
+# Устанавливаем рабочую директорию
+WORKDIR /var/www/html
+
+# Копируем файлы OpenCart в контейнер
+COPY app/ ./
+
+# Устанавливаем права доступа
+RUN chown -R www-data:www-data /var/www/html
+
+# Открываем порт 80
+EXPOSE 80
+
+# Запускаем Apache
+CMD ["apache2-foreground"]
