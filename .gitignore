@@ -12,3 +12,8 @@
 
 # Директории с данными
 # app/system/storage/download/
+
+/**/data/mysql/*
+!/**/data/mysql/.gitkeep
+/**/data/apache/logs/*
+!/**/data/apache/logs/.gitkeep
