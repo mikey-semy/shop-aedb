@@ -15,8 +15,8 @@ services:
     networks:
       - lamp.network
     ports:
-      - "81:80"
-      - "444:443"
+      - "8081:80"
+      - "8443:443"
     volumes:
       - ./app:/var/www/html
       - ./data/apache/logs:/var/log/apache2
