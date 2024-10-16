@@ -18,7 +18,7 @@ services:
       - "8081:80"
       - "8443:443"
     volumes:
-      - ./app:/var/www/html
+      - ./build/php/app:/var/www/html
       - ./data/apache/logs:/var/log/apache2
 
   mysql:
