@@ -6,7 +6,7 @@ networks:
 
 services:
   php-apache:
-    build: './build/php'
+    build: './'
     restart: unless-stopped
     container_name: lamp.php-apache
     tty: true
@@ -18,7 +18,7 @@ services:
       - "8081:80"
       - "8443:443"
     volumes:
-      - ./build/php/app:/var/www/html
+      - ./app:/var/www/html
       - ./data/apache/logs:/var/log/apache2
 
   mysql:
