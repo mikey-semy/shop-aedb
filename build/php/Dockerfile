@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install gd zip
 
 # Копируем файлы OpenCart в контейнер
-COPY ../../app/ /var/www/html/
+COPY app/ /var/www/html/
 
 # Копируем настройки php
 COPY ./php.ini ${PHP_INI_DIR}/conf.d/99-php.ini
