@@ -23,6 +23,9 @@ COPY app/ ./
 # Устанавливаем права доступа
 RUN chown -R www-data:www-data /var/www/html
 
+# Добавление конфигурации ServerName
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 # Открываем порт 80
 EXPOSE 80
 

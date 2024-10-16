@@ -16,3 +16,6 @@ RUN apt-get update && apt-get install -y \
 
 # Copy php settings
 COPY ./php.ini ${PHP_INI_DIR}/conf.d/99-php.ini
+
+# Добавление конфигурации ServerName
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
