@@ -1,21 +1,35 @@
 FROM php:8.3-apache
 
-# Set timezone
-ENV TZ=${TZ:-UTC}
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# Устанавливаем необходимые расширения PHP
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
+# Устанавливаем зависимости для OpenCart
 RUN apt-get update && apt-get install -y \
-        zip \
-        libzip-dev \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-        libwebp-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-    && docker-php-ext-install -j$(nproc) mysqli pdo pdo_mysql opcache zip gd
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libzip-dev \
+    unzip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd zip
 
-# Copy php settings
+# Устанавливаем рабочую директорию
+WORKDIR /var/www/html
+
+# Копируем файлы OpenCart в контейнер
+COPY app/ ./
+
+# Копируем настройки php
 COPY ./php.ini ${PHP_INI_DIR}/conf.d/99-php.ini
+
+# Устанавливаем права доступа
+RUN chown -R www-data:www-data /var/www/html
 
 # Добавление конфигурации ServerName
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# Открываем порт 80
+EXPOSE 80
+
+# Запускаем Apache
+CMD ["apache2-foreground"]
