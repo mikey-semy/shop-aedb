@@ -13,11 +13,8 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd zip
 
-# Устанавливаем рабочую директорию
-WORKDIR /var/www/html
-
 # Копируем файлы OpenCart в контейнер
-COPY app/ ./
+COPY app/ /var/www/html/
 
 # Копируем настройки php
 COPY ./php.ini ${PHP_INI_DIR}/conf.d/99-php.ini
