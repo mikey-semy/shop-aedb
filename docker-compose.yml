@@ -22,7 +22,7 @@ services:
       - ./data/apache/logs:/var/log/apache2
 
   mysql:
-    image: mysql:8
+    image: mysql:5
     restart: unless-stopped
     container_name: lamp.mysql
     tty: true
